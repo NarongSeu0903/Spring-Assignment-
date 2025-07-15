@@ -1,6 +1,5 @@
 package kh.edu.cstad.modilebankingaba.serivce.impl;
 
-import jakarta.transaction.Transactional;
 import kh.edu.cstad.modilebankingaba.domain.Account;
 import kh.edu.cstad.modilebankingaba.domain.Customer;
 import kh.edu.cstad.modilebankingaba.dto.CreateAccountRequest;
@@ -13,6 +12,7 @@ import kh.edu.cstad.modilebankingaba.serivce.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-
+    @Transactional
     @Override
     public ResponseAccount createAccount(CreateAccountRequest createAccountRequest) {
         if (accountRepository.existsByActNo(createAccountRequest.actNo())) {
@@ -58,6 +58,7 @@ public class AccountServiceImpl implements AccountService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public ResponseAccount updateAccount(String actNo, UpdateAccount updateAccountRequest) {
         Account account = accountRepository.findByActNo(actNo)
